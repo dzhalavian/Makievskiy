@@ -1,0 +1,568 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище BDzachetModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Forma">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Forma" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Ocenka">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDPredmet" Type="int" />
+          <Property Name="IDStudent" Type="int" />
+          <Property Name="Ocenki" Type="int" />
+        </EntityType>
+        <EntityType Name="Predmet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PredmetName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDTeacher" Type="int" />
+        </EntityType>
+        <EntityType Name="Spec">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SpecName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDSpec" Type="int" />
+          <Property Name="IDGroup" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="IDForma" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameTeacher" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Ocenka_Predmet1">
+          <End Role="Predmet" Type="Self.Predmet" Multiplicity="0..1" />
+          <End Role="Ocenka" Type="Self.Ocenka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Predmet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ocenka">
+              <PropertyRef Name="IDPredmet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ocenka_Student1">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Ocenka" Type="Self.Ocenka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ocenka">
+              <PropertyRef Name="IDStudent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Predmet_Teacher1">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Predmet" Type="Self.Predmet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Predmet">
+              <PropertyRef Name="IDTeacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Forma1">
+          <End Role="Forma" Type="Self.Forma" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forma">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IDForma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Group1">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IDGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Spec">
+          <End Role="Spec" Type="Self.Spec" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spec">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IDSpec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище BDzachetModelContainer">
+          <EntitySet Name="Forma" EntityType="Self.Forma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ocenka" EntityType="Self.Ocenka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Predmet" EntityType="Self.Predmet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Spec" EntityType="Self.Spec" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Ocenka_Predmet1" Association="Self.FK_Ocenka_Predmet1">
+            <End Role="Predmet" EntitySet="Predmet" />
+            <End Role="Ocenka" EntitySet="Ocenka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ocenka_Student1" Association="Self.FK_Ocenka_Student1">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Ocenka" EntitySet="Ocenka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Predmet_Teacher1" Association="Self.FK_Predmet_Teacher1">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Predmet" EntitySet="Predmet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Forma1" Association="Self.FK_Student_Forma1">
+            <End Role="Forma" EntitySet="Forma" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Group1" Association="Self.FK_Student_Group1">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Spec" Association="Self.FK_Student_Spec">
+            <End Role="Spec" EntitySet="Spec" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDzachetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Forma">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Forma1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Student_Forma1" FromRole="Forma" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Student_Group1" FromRole="Group" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Ocenka">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDPredmet" Type="Int32" />
+          <Property Name="IDStudent" Type="Int32" />
+          <Property Name="Ocenki" Type="Int32" />
+          <NavigationProperty Name="Predmet" Relationship="Self.FK_Ocenka_Predmet1" FromRole="Ocenka" ToRole="Predmet" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Ocenka_Student1" FromRole="Ocenka" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Predmet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PredmetName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDTeacher" Type="Int32" />
+          <NavigationProperty Name="Ocenka" Relationship="Self.FK_Ocenka_Predmet1" FromRole="Predmet" ToRole="Ocenka" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Predmet_Teacher1" FromRole="Predmet" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Spec">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SpecName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Student_Spec" FromRole="Spec" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDSpec" Type="Int32" />
+          <Property Name="IDGroup" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="IDForma" Type="Int32" />
+          <NavigationProperty Name="Forma" Relationship="Self.FK_Student_Forma1" FromRole="Student" ToRole="Forma" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Student_Group1" FromRole="Student" ToRole="Group" />
+          <NavigationProperty Name="Ocenka" Relationship="Self.FK_Ocenka_Student1" FromRole="Student" ToRole="Ocenka" />
+          <NavigationProperty Name="Spec" Relationship="Self.FK_Student_Spec" FromRole="Student" ToRole="Spec" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameTeacher" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Predmet" Relationship="Self.FK_Predmet_Teacher1" FromRole="Teacher" ToRole="Predmet" />
+        </EntityType>
+        <Association Name="FK_Student_Forma1">
+          <End Role="Forma" Type="Self.Forma" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forma">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IDForma" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Group1">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IDGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ocenka_Predmet1">
+          <End Role="Predmet" Type="Self.Predmet" Multiplicity="0..1" />
+          <End Role="Ocenka" Type="Self.Ocenka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Predmet">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ocenka">
+              <PropertyRef Name="IDPredmet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ocenka_Student1">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Ocenka" Type="Self.Ocenka" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ocenka">
+              <PropertyRef Name="IDStudent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Predmet_Teacher1">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Predmet" Type="Self.Predmet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Predmet">
+              <PropertyRef Name="IDTeacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Spec">
+          <End Role="Spec" Type="Self.Spec" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spec">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="IDSpec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDzachetEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Forma" EntityType="Self.Forma" />
+          <EntitySet Name="Group" EntityType="Self.Group" />
+          <EntitySet Name="Ocenka" EntityType="Self.Ocenka" />
+          <EntitySet Name="Predmet" EntityType="Self.Predmet" />
+          <EntitySet Name="Spec" EntityType="Self.Spec" />
+          <EntitySet Name="Student" EntityType="Self.Student" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" />
+          <AssociationSet Name="FK_Student_Forma1" Association="Self.FK_Student_Forma1">
+            <End Role="Forma" EntitySet="Forma" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Group1" Association="Self.FK_Student_Group1">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ocenka_Predmet1" Association="Self.FK_Ocenka_Predmet1">
+            <End Role="Predmet" EntitySet="Predmet" />
+            <End Role="Ocenka" EntitySet="Ocenka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ocenka_Student1" Association="Self.FK_Ocenka_Student1">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Ocenka" EntitySet="Ocenka" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Predmet_Teacher1" Association="Self.FK_Predmet_Teacher1">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Predmet" EntitySet="Predmet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Spec" Association="Self.FK_Student_Spec">
+            <End Role="Spec" EntitySet="Spec" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(BDzachetModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(BDzachetModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BDzachetModelContainer" CdmEntityContainer="BDzachetEntities">
+          <EntitySetMapping Name="Forma">
+            <EntityTypeMapping TypeName="BDzachetModel.Forma">
+              <MappingFragment StoreEntitySet="Forma">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Forma1" ColumnName="Forma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Group">
+            <EntityTypeMapping TypeName="BDzachetModel.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ocenka">
+            <EntityTypeMapping TypeName="BDzachetModel.Ocenka">
+              <MappingFragment StoreEntitySet="Ocenka">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="IDPredmet" ColumnName="IDPredmet" />
+                <ScalarProperty Name="IDStudent" ColumnName="IDStudent" />
+                <ScalarProperty Name="Ocenki" ColumnName="Ocenki" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Predmet">
+            <EntityTypeMapping TypeName="BDzachetModel.Predmet">
+              <MappingFragment StoreEntitySet="Predmet">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="PredmetName" ColumnName="PredmetName" />
+                <ScalarProperty Name="IDTeacher" ColumnName="IDTeacher" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spec">
+            <EntityTypeMapping TypeName="BDzachetModel.Spec">
+              <MappingFragment StoreEntitySet="Spec">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="SpecName" ColumnName="SpecName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Student">
+            <EntityTypeMapping TypeName="BDzachetModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="IDSpec" ColumnName="IDSpec" />
+                <ScalarProperty Name="IDGroup" ColumnName="IDGroup" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="IDForma" ColumnName="IDForma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BDzachetModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teacher">
+            <EntityTypeMapping TypeName="BDzachetModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="NameTeacher" ColumnName="NameTeacher" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище BDzachetModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище BDzachetModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище BDzachetModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище BDzachetModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDzachetModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище BDzachetModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDzachetModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище BDzachetModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище BDzachetModel.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

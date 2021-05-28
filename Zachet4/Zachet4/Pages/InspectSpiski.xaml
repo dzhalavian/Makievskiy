@@ -1,0 +1,28 @@
+﻿<Window x:Class="Zachet4.InspectSpiski"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Zachet4"
+        mc:Ignorable="d"
+        Title="InspectSpiski" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <DataGrid 
+            CanUserSortColumns="False"
+                  AutoGenerateColumns="False"
+                  VerticalScrollBarVisibility="Auto"
+                  IsReadOnly="True"
+                  Name="OcenkaDataGrid">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ФИО" 
+                                    Width="1*"
+                                    Binding="{Binding Student.StudentName}"/>
+                    <DataGridTextColumn Header="Оценка" 
+                                    Width="1*"
+                                    Binding="{Binding Ocenki}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>

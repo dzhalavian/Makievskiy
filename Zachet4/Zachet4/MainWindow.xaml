@@ -1,0 +1,18 @@
+﻿<Window x:Class="Zachet4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Zachet4"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Университет" FontSize="30" HorizontalAlignment="Center" Margin="210,20,209,0" VerticalAlignment="Top"/>
+        <Button Click="AddStudent" Content="Добавить студента" HorizontalAlignment="Center" Margin="216,120,216,0" VerticalAlignment="Top" Width="160" Height="40"/>
+        <Button Click="AddMark" Content="Добавить оценку" HorizontalAlignment="Center" Margin="216,170,216,0" VerticalAlignment="Top" Width="160" Height="40"/>
+        <Button Click="InspectSpisok" Content="Спиzсок студентов" HorizontalAlignment="Center" Margin="216,220,216,0" VerticalAlignment="Top" Width="160" Height="40"/>
+    </Grid>
+</Window>
